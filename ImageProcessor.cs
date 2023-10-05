@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace KernelConvolution
+﻿namespace KernelConvolution
 {
     public class ImageProcessor
     {
@@ -8,31 +6,83 @@ namespace KernelConvolution
         {
             Bitmap outputImage = new Bitmap(inputImage.Width, inputImage.Height);
             List<RgbColor> snapShot;
-            for (int x = 1; x < inputImage.Width - 1; x++)
+            if (kernel.Length == 9)
             {
-                for (int y = 1; y < inputImage.Height - 1; y++)
+                for (int x = 1; x < inputImage.Width - 1; x++)
                 {
-                    snapShot = new List<RgbColor>() {
-                        RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y - 1), kernel[0]),
-                        RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y), kernel[1]),
-                        RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y + 1), kernel[2]),
-                        RgbColor.MultColorByNum(inputImage.GetPixel(x, y - 1), kernel[3]),
-                        RgbColor.MultColorByNum(inputImage.GetPixel(x, y), kernel[4]),
-                        RgbColor.MultColorByNum(inputImage.GetPixel(x, y + 1), kernel[5]),
-                        RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y - 1), kernel[6]),
-                        RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y), kernel[7]),
-                        RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y + 1), kernel[8])
-                    };
-
-                    RgbColor sum = new RgbColor(0, 0, 0);
-                    foreach (var item in snapShot)
+                    for (int y = 1; y < inputImage.Height - 1; y++)
                     {
-                        sum = RgbColor.AddColors(sum, item);
-                    }
+                        snapShot = new List<RgbColor>() {
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y - 1), kernel[0]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y), kernel[1]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y + 1), kernel[2]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x, y - 1), kernel[3]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x, y), kernel[4]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x, y + 1), kernel[5]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y - 1), kernel[6]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y), kernel[7]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y + 1), kernel[8])
+                        };
 
-                    outputImage.SetPixel(x,y,RgbColor.ConvertoToColor(sum));
+                        RgbColor sum = new RgbColor(0, 0, 0);
+                        foreach (var item in snapShot)
+                        {
+                            sum = RgbColor.AddColors(sum, item);
+                        }
+
+                        outputImage.SetPixel(x,y,RgbColor.ConvertoToColor(sum));
+                    }
                 }
             }
+            if (kernel.Length == 25)
+            {
+                for (int x = 2; x < inputImage.Width - 2; x++)
+                {
+                    for (int y = 2; y < inputImage.Height - 2; y++)
+                    {
+                        snapShot = new List<RgbColor>() {
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 2, y - 2), kernel[0]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 2, y - 1), kernel[1]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 2, y), kernel[2]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 2, y + 1), kernel[3]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 2, y + 2), kernel[4]),
+
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y - 2), kernel[5]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y - 1), kernel[6]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y), kernel[7]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y + 1), kernel[8]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x - 1, y + 2), kernel[9]),
+
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x, y - 2), kernel[10]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x, y - 1), kernel[11]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x, y), kernel[12]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x, y + 1), kernel[13]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x, y + 2), kernel[14]),
+
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y - 2), kernel[15]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y - 1), kernel[16]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y), kernel[17]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y + 1), kernel[18]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 1, y + 2), kernel[19]),
+
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 2, y - 2), kernel[20]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 2, y - 1), kernel[21]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 2, y), kernel[22]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 2, y + 1), kernel[23]),
+                            RgbColor.MultColorByNum(inputImage.GetPixel(x + 2, y + 2), kernel[24])
+                        };
+
+                        RgbColor sum = new RgbColor(0, 0, 0);
+                        foreach (var item in snapShot)
+                        {
+                            sum = RgbColor.AddColors(sum, item);
+                        }
+
+                        outputImage.SetPixel(x, y, RgbColor.ConvertoToColor(sum));
+                    }
+                }
+            }
+            
 
             return outputImage;
         }
