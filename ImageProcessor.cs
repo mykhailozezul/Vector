@@ -2,7 +2,7 @@
 {
     public class ImageProcessor
     {
-        public static Bitmap ApplyKernelToImage(int[] kernel, Bitmap inputImage)
+        public static Bitmap ApplyKernelToImage(double[] kernel, Bitmap inputImage)
         {
             Bitmap outputImage = new Bitmap(inputImage.Width, inputImage.Height);
             List<RgbColor> snapShot;
