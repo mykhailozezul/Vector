@@ -187,5 +187,57 @@
             return (v2.R - v1.R) * (v2.R - v1.R) + (v2.G - v1.G) * (v2.G - v1.G) + (v2.B - v1.B) * (v2.B - v1.B);
         }
 
+        public static Bitmap AdaptiveThreshold(int cutoff, int clearance, Bitmap image)
+        {
+            int width = image.Width;
+            int height = image.Height;
+            Bitmap outputImage = new Bitmap(width, height);
+            int brightness = 0;
+            int result = 0;
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    brightness = (int)(image.GetPixel(x, y).GetBrightness()*255);
+                    if (brightness < cutoff-clearance)
+                    {
+                        result = 255;
+                    }
+                    if (brightness >= cutoff)
+                    {
+                        result = 0;
+                    }
+                    outputImage.SetPixel(x, y, Color.FromArgb(result, result, result));
+                }
+            }
+            return outputImage;
+        }    
+        
+        public static Bitmap Downsize(int w, int h, Bitmap image)
+        {
+            int width = image.Width;
+            int height = image.Height;
+            Bitmap outputImage = new Bitmap(w, h);
+
+            double counterX = 0;
+            double counterY = 0;
+            double dx = (double)w / (double)width;
+            double dy = (double)h / (double)height;
+            for (int x = 0; x < width; x++)
+            {
+                
+                for (int y = 0; y < height; y++)
+                {                    
+                    int newX = (int)Math.Floor(counterX);
+                    int newY = (int)Math.Floor(counterY);
+                    outputImage.SetPixel(newX, newY, image.GetPixel(x, y));
+                    counterY += dy;
+                }
+                counterY = 0;
+                counterX += dx;
+            }
+            return outputImage;
+        }
+
     }
 }
